@@ -1,38 +1,58 @@
-.App {
-  text-align: center;
+html, body {
+    margin: 0;
+    padding: 0;
+    height: 100vh;
+    width: 100%; /* 修正 */
+    overflow-x: hidden; /* 横スクロール防止 */
 }
 
-.App-logo {
-  height: 40vmin;
-  pointer-events: none;
+.topContainer {
+    display: flex;
+    flex-direction: column;
+    height: 100vh;
+    width: 100%; /* 修正 */
+    margin: 0;
+    padding: 0;
 }
 
-@media (prefers-reduced-motion: no-preference) {
-  .App-logo {
-    animation: App-logo-spin infinite 20s linear;
-  }
+/* ヘッダー部分 */
+.headerPanel {
+    display: flex; /* ヘッダー内の全要素を横並びに */
+    align-items: center;
+    justify-content: space-between;
+    width: 100%; /* 修正 */
+    background-color: grey;
+    height: 40px; /* ヘッダー高さ */
 }
 
-.App-header {
-  background-color: #282c34;
-  min-height: 100vh;
-  display: flex;
-  flex-direction: column;
-  align-items: center;
-  justify-content: center;
-  font-size: calc(10px + 2vmin);
-  color: white;
+/* 下部コンテンツ全体のコンテナ */
+.contentWrapper {
+    flex: 1;
+    width: 100%; /* 修正 */
 }
 
-.App-link {
-  color: #61dafb;
+/* home: 左/メイン/右パネルを横並びにし、残りの高さを埋める */
+.home {
+    display: flex;
+    width: 100%; /* 修正 */
+    flex: 1;
+    align-items: stretch;
 }
 
-@keyframes App-logo-spin {
-  from {
-    transform: rotate(0deg);
-  }
-  to {
-    transform: rotate(360deg);
-  }
+/* 左パネル：LeftPanel */
+.leftPanel {
+    width: 20%;
+    background-color: #ccffcc; /* 薄い黄緑 */
+}
+
+/* 右パネル：RightPanel */
+.rightPanel {
+    width: 20%;
+    background-color: #add8e6; /* 薄い水色 */
+}
+
+/* メインパネル：MainPanel */
+.mainPanel {
+    flex: 1;
+    background-color: #ffffe0; /* 薄い黄色 */
 }
