@@ -7,6 +7,7 @@ import Account from './Account';
 function MyAccount() {
   const [userData, setUserData] = useState(null);
   const [isPopupOpen, setIsPopupOpen] = useState(false);
+  const [uid, setUid] = useState(null);
 
   useEffect(() => {
     const fetchUserData = async () => {
@@ -15,6 +16,7 @@ function MyAccount() {
       const user = auth.currentUser;
 
       if (user) {
+        setUid(user.uid); // UIDを設定
         const userDoc = doc(db, 'users', user.uid);
         const userDocSnap = await getDoc(userDoc);
 
@@ -37,6 +39,11 @@ function MyAccount() {
     setIsPopupOpen(false);
   };
 
+  const handleFollow = () => {
+    console.log('User followed');
+    // フォロー処理後のロジックをここに追加
+  };
+
   if (!userData) {
     return <div>Loading...</div>;
   }
@@ -45,9 +52,14 @@ function MyAccount() {
     <div className="header">
       <img className="profile-image" src={userData.photoURL} alt="Profile" />
       <span onClick={handleAccountClick}>{userData.name}</span>
-      <span>{userData.followers}</span>
-      <span>{userData.following}</span>
-      {isPopupOpen && <Account userData={userData} onClose={handleClosePopup}/>}
+      {isPopupOpen && (
+        <Account
+          userData={userData}
+          onClose={handleClosePopup}
+          onFollow={handleFollow}
+          uid={uid}
+        />
+      )}
     </div>
   );
 }

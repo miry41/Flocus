@@ -8,6 +8,7 @@ function UserSearch() {
   const [users, setUsers] = useState([]);
   const [selectedUser, setSelectedUser] = useState(null);
   const [isPopupOpen, setIsPopupOpen] = useState(false);
+  const currentUserUid = 'currentUserUid'; // ここで現在のユーザーのUIDを取得する
 
   useEffect(() => {
     const handleSearch = async () => {
@@ -39,6 +40,11 @@ function UserSearch() {
     setSelectedUser(null);
   };
 
+  const handleFollow = () => {
+    console.log('User followed');
+    // フォロー処理後のロジックをここに追加
+  };
+
   return (
     <div style={{ position: 'relative' }}>
       <input
@@ -61,7 +67,7 @@ function UserSearch() {
         </div>
       )}
       {isPopupOpen && selectedUser && (
-        <Account userData={selectedUser} onClose={handleClosePopup} />
+        <Account userData={selectedUser} onClose={handleClosePopup} onFollow={handleFollow} uid={currentUserUid} />
       )}
     </div>
   );
