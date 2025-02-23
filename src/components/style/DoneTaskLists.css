@@ -1,0 +1,13 @@
+.task-list-box {
+    max-height: 120px; /* 最大の高さを指定 */
+    overflow-y: auto; /* 垂直方向のスクロールバーを表示 */
+    border: 1px solid #ddd; /* ボーダーを追加 */
+    padding: 10px; /* 内側の余白を追加 */
+    border-radius: 5px; /* 角を丸くする */
+  }
+  
+  .tasks {
+    list-style-type: none; /* リストのスタイルをなしにする */
+    padding: 0; /* パディングをリセット */
+    margin: 0; /* マージンをリセット */
+  }

@@ -7,7 +7,7 @@ function DoneTasks() {
     <div className="container mt-2">
       <div className="row">
         <div className="col-md-12">
-          <div className="card" style={{ height: '50%' }}>
+          <div className="card" style={{ height: '100%' }}>
             <div className="card-header">
               完了
             </div>
