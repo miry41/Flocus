@@ -19,7 +19,7 @@ function TaskLists() {
     })
 
     return () => unsubscribe()
-  }, [])
+  }, [])//ロード時一回のみ実行
 
   return (
     <div>

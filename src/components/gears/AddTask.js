@@ -8,20 +8,24 @@ function AddTask({ onClose }) {
   const [deadline, setDeadline] = React.useState('');
   const [goalTime, setGoalTime] = React.useState('');
 
-  function addATask(e) {
+  async function addATask(e) {
     e.preventDefault();
     const { uid, photoURL } = auth.currentUser;
-    db.collection('tasks').add({
-      text: task,
-      deadline,     // 締め切り情報を保存
-      goalTime,     // 目標達成時間（時間数として入力）を保存
-      uid,
-      photoURL,
-      createdAt: firebase.firestore.FieldValue.serverTimestamp()
-    });
-    setTask('');
-    setDeadline('');
-    setGoalTime('');
+    try {
+      await db.collection('users').doc('RXVjqgF9u6qtGHGRAAk6').collection('tasks').add({
+        text: task,
+        deadline,     // 締め切り情報を保存
+        goalTime,     // 目標達成時間（時間数として入力）を保存
+        photoURL,
+        createdAt: firebase.firestore.FieldValue.serverTimestamp()
+      });
+      setTask('');
+      setDeadline('');
+      setGoalTime('');
+      onClose(); // 正常に追加できた後、ポップアップを閉じる等の処理
+    } catch (error) {
+      console.error('タスクの追加中にエラーが発生しました:', error);
+    }
   }
 
   return (
@@ -62,4 +66,4 @@ function AddTask({ onClose }) {
   )
 }
 
-export default AddTask
+export default AddTask;
