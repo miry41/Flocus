@@ -7,7 +7,9 @@ function TaskLists() {
   const [tasks, setTasks] = useState([])
 
   useEffect(() => {
-    const colRef = collection(db, "tasks")
+    // ここ後で編集する必要あり
+    const colRef = collection(db, "users", "RXVjqgF9u6qtGHGRAAk6", "tasks")
+    
     const unsubscribe = onSnapshot(colRef, (querySnapshot) => {
       const taskList = querySnapshot.docs.map((doc) => ({
         id: doc.id,
@@ -21,7 +23,6 @@ function TaskLists() {
 
   return (
     <div>
-        <div>{console.log(tasks)}</div>
       <div className="tasks">
         {tasks.length > 0 ? (
           tasks.map((task) => <Task key={task.id} task={task} />)
