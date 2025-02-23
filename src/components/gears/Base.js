@@ -1,4 +1,5 @@
 import React, { useState, useEffect, useCallback } from 'react';
+import 'bootstrap/dist/css/bootstrap.min.css';
 
 function Base() {
   const [currentTime, setCurrentTime] = useState("");
@@ -36,14 +37,15 @@ function Base() {
     <div className="base">
       <div className="text-center">
         <h5>{currentDate}</h5>
-        <h5>{currentTime}</h5>
+        <h1 className="display-1">{currentTime}</h1>
         <input
           type="text"
           placeholder="Googleで検索..."
           value={searchQuery}
           onChange={handleSearchChange}
           onKeyPress={handleSearchKeyPress}
-          style={{ width: "60%", padding: "5px" }}
+          className="form-control mx-auto"
+          style={{ maxWidth: "400px" }}
         />
       </div>
     </div>
