@@ -1,12 +1,34 @@
 // src/components/gears/CurrentOn.js
-import React from 'react';
+import React, { useEffect, useState } from 'react';
 import { Draggable } from '@hello-pangea/dnd';
+import { db } from '../../firebase'; // Firebaseの設定ファイルをインポート
 
-const CurrentOn = ({ tasks }) => {
+const CurrentOn = ({ tasks, uid }) => {
+  const [currentTask, setCurrentTask] = useState(null);
+
+  useEffect(() => {
+    const fetchTask = async () => {
+      try {
+        const taskRef = db.collection('users').doc(uid).collection('tasks').doc(tasks.currentTaskId);
+        const taskDoc = await taskRef.get();
+        if (taskDoc.exists) {
+          setCurrentTask({ id: taskDoc.id, ...taskDoc.data() });
+          console.log(taskDoc.data());
+        } else {
+          console.log('No such task!');
+        }
+      } catch (error) {
+        console.error('Error fetching task:', error);
+      }
+    };
+
+    fetchTask();
+  }, [tasks.currentTaskId, uid]);
+
   return (
     <>
-      {tasks.map((task, index) => (
-        <Draggable key={task.id} draggableId={task.id} index={index}>
+      {currentTask ? (
+        <Draggable key={currentTask.id} draggableId={currentTask.id} index={0}>
           {(provided) => (
             <div
               ref={provided.innerRef}
@@ -14,11 +36,16 @@ const CurrentOn = ({ tasks }) => {
               {...provided.dragHandleProps}
               className="list-group-item"
             >
-              <div>{task.content}</div>
+              <div>TaskName: {currentTask.name}</div>
+              <div>Status: {currentTask.status}</div>
+              <div>Deadline: {currentTask.deadline}</div>
+              {/* 他のフィールドも必要に応じて追加 */}
             </div>
           )}
         </Draggable>
-      ))}
+      ) : (
+        <div>Loading...</div>
+      )}
     </>
   );
 };
