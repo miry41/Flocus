@@ -8,13 +8,13 @@ function MainPanel() {
   return (
     <div className="container-fluid mainPanel d-flex flex-column">
       <div className="row flex-grow-1 w-100">
-        <div className="col-12">
+        <div className="col-12" style={{ height: "30vh" }}>
           <Base />
         </div>
-        <div className="col-12">
+        <div className="col-12" style={{ height: "35vh" }}>
           <CurrentTask />
         </div>
-        <div className="col-12">
+        <div className="col-12" style={{ height: "25vh" }}>
           <DoneTasks />
         </div>
       </div>
