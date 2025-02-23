@@ -21,7 +21,6 @@ function Task({ task }) {
 
   return (
     <div className="bg-light py-2 px-3 m-0 rounded">
-      {console.log(task)}
       <ul className="list-group m-0">
         <li className="list-group-item d-flex justify-content-between align-items-center m-0">
           {task.name}
