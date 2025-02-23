@@ -7,9 +7,9 @@ const Meter = ({ commitTime }) => {
   return (
     <div className="progress" style={{ height: '8px' }}>
       <div
-        className="progress-bar bg-info"
+        className="progress-bar"
         role="progressbar"
-        style={{ width: `${progressWidth}%` }}
+        style={{ width: `${progressWidth}%`, backgroundColor: 'limegreen' }}
         aria-valuenow={minutes}
         aria-valuemin="0"
         aria-valuemax="60"
