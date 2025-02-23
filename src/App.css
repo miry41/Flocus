@@ -22,7 +22,7 @@ html, body {
     justify-content: space-between;
     width: 100%;
     background-color: grey;
-    height: 40px;
+    height: 5vh;
 }
 
 /* home: 左/メイン/右パネルを横並びにし、残りの高さを埋める */
@@ -31,6 +31,7 @@ html, body {
     width: 100%;
     flex: 1;
     align-items: stretch;
+    flex-wrap: wrap; /* フレックスアイテムを折り返す */
 }
 
 /* 左パネル：LeftPanel */
@@ -46,4 +47,21 @@ html, body {
 /* メインパネル：MainPanel */
 .mainPanel {
     background-color: #ffffe0; /* 薄い黄色 */
+}
+
+/* レスポンシブデザインのためのメディアクエリ */
+@media (max-width: 768px) {
+    .home {
+        flex-direction: row;
+    }
+
+    .mainPanel {
+        order: 1; /* 最初に表示 */
+        flex: 1 100%; /* 横幅を100%に設定 */
+    }
+
+    .leftPanel, .rightPanel {
+        order: 1; /* 次に表示 */
+        flex: 1 50%; /* 横幅を50%に設定 */
+    }
 }

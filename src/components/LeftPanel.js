@@ -6,7 +6,7 @@ function LeftPanel() {
     const [showAddTask, setShowAddTask] = useState(false)
 
     return (
-        <div className="leftPanel">
+        <div className="leftPanel h-100">
             <button className="btn btn-primary" onClick={() => setShowAddTask(true)}>
                 Add Task!
             </button>
