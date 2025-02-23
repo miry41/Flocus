@@ -1,6 +1,7 @@
 import React from 'react';
 import { doc, deleteDoc } from "firebase/firestore";
 import { db } from "../../firebase"; // firebase設定ファイルのパスに合わせて修正してください
+import { getAuth } from 'firebase/auth'; // Firebase Authをインポート
 
 function Task({ task }) {
   // task.CommitTimeは分単位と仮定
@@ -10,10 +11,15 @@ function Task({ task }) {
 
   const handleDeleteTask = async () => {
     try {
-      // task.id を利用して削除対象のドキュメントを指定
-      const taskDocRef = doc(db, "users", "RXVjqgF9u6qtGHGRAAk6", "tasks", task.id);
-      await deleteDoc(taskDocRef);
-      console.log("タスクを正常に消去しました。");
+      const auth = getAuth();
+      const user = auth.currentUser;
+
+      if (user) {
+        // task.id を利用して削除対象のドキュメントを指定
+        const taskDocRef = doc(db, "users", user.uid, "tasks", task.id);
+        await deleteDoc(taskDocRef);
+        //console.log("タスクを正常に消去しました。");
+      }
     } catch (error) {
       console.error("タスク削除エラー: ", error);
     }
@@ -21,7 +27,6 @@ function Task({ task }) {
 
   return (
     <div className="bg-light py-2 px-3 m-0 rounded">
-      {console.log(task)}
       <ul className="list-group m-0">
         <li className="list-group-item d-flex justify-content-between align-items-center m-0">
           {task.name}

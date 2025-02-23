@@ -2,24 +2,29 @@ import React, { useState, useEffect } from 'react'
 import Task from './Task'
 import { db } from '../../firebase'
 import { collection, onSnapshot } from 'firebase/firestore'
+import { getAuth } from 'firebase/auth' // Firebase Authをインポート
 
 function TaskLists() {
   const [tasks, setTasks] = useState([])
 
   useEffect(() => {
-    // ここ後で編集する必要あり
-    const colRef = collection(db, "users", "RXVjqgF9u6qtGHGRAAk6", "tasks")
-    
-    const unsubscribe = onSnapshot(colRef, (querySnapshot) => {
-      const taskList = querySnapshot.docs.map((doc) => ({
-        id: doc.id,
-        ...doc.data(), // Firestore のデータ
-      }))
-      setTasks(taskList)
-    })
+    const auth = getAuth()
+    const user = auth.currentUser
 
-    return () => unsubscribe()
-  }, [])//ロード時一回のみ実行
+    if (user) {
+      const colRef = collection(db, "users", user.uid, "tasks")
+      
+      const unsubscribe = onSnapshot(colRef, (querySnapshot) => {
+        const taskList = querySnapshot.docs.map((doc) => ({
+          id: doc.id,
+          ...doc.data(), // Firestore のデータ
+        }))
+        setTasks(taskList)
+      })
+
+      return () => unsubscribe()
+    }
+  }, []) // ロード時一回のみ実行
 
   return (
     <div>

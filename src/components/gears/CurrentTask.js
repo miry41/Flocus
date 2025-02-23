@@ -1,17 +1,20 @@
-import React, { useState } from 'react'
-import { DragDropContext, Droppable, Draggable } from '@hello-pangea/dnd'
-import 'bootstrap/dist/css/bootstrap.min.css'
+// src/components/gears/CurrentTask.js
+import React, { useState } from 'react';
+import { DragDropContext, Droppable } from '@hello-pangea/dnd';
+import 'bootstrap/dist/css/bootstrap.min.css';
+import CurrentOn from './CurrentOn';
+import EmptyTask from './EmptyTask';
 
 function CurrentTask() {
-  const [currentTask, setCurrentTask] = useState([])
+  const [currentTask, setCurrentTask] = useState([]);
 
   const onDragEnd = (result) => {
-    if (!result.destination) return
-    const items = Array.from(currentTask)
-    const [reorderedItem] = items.splice(result.source.index, 1)
-    items.splice(result.destination.index, 0, reorderedItem)
-    setCurrentTask(items)
-  }
+    if (!result.destination) return;
+    const items = Array.from(currentTask);
+    const [reorderedItem] = items.splice(result.source.index, 1);
+    items.splice(result.destination.index, 0, reorderedItem);
+    setCurrentTask(items);
+  };
 
   return (
     <div className="container mt-3">
@@ -19,37 +22,24 @@ function CurrentTask() {
         <div className="col">
           <div className="card">
             {/* カードヘッダーに「着手中」を表示 */}
-            <div className="card-header">
-              着手中
-            </div>
+            <div className="card-header">着手中</div>
             <div className="card-body">
               {/* タスクを配置するための枠 */}
               <div className="border rounded p-2" style={{ minHeight: '200px' }}>
                 <DragDropContext onDragEnd={onDragEnd}>
                   <Droppable droppableId="currentTask">
                     {(provided) => (
-                      <div 
-                        className="list-group" 
-                        {...provided.droppableProps} 
+                      <div
+                        className="list-group"
+                        {...provided.droppableProps}
                         ref={provided.innerRef}
                       >
                         {currentTask.length > 0 ? (
-                          currentTask.map((task, index) => (
-                            <Draggable key={task.id} draggableId={task.id} index={index}>
-                              {(provided) => (
-                                <div
-                                  ref={provided.innerRef}
-                                  {...provided.draggableProps}
-                                  {...provided.dragHandleProps}
-                                  className="list-group-item"
-                                >
-                                  <div>{task.content}</div>
-                                </div>
-                              )}
-                            </Draggable>
-                          ))
+                          // タスクがある場合は CurrentOn を表示
+                          <CurrentOn tasks={currentTask} />
                         ) : (
-                          <p className="text-muted">現在のタスクがありません</p>
+                          // タスクがない場合は EmptyTask を表示
+                          <EmptyTask />
                         )}
                         {provided.placeholder}
                       </div>
@@ -62,7 +52,7 @@ function CurrentTask() {
         </div>
       </div>
     </div>
-  )
+  );
 }
 
-export default CurrentTask
+export default CurrentTask;
