@@ -45,7 +45,7 @@ function Base() {
           onChange={handleSearchChange}
           onKeyPress={handleSearchKeyPress}
           className="form-control mx-auto"
-          style={{ maxWidth: "400px" }}
+          style={{ maxWidth: "500px" }}
         />
       </div>
     </div>

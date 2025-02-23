@@ -1,7 +1,7 @@
 import React, { useState, useEffect } from 'react';
 import Task from './Task';
 import { db } from '../../firebase';
-import { collection, onSnapshot } from 'firebase/firestore';
+import { collection, onSnapshot, query, where } from 'firebase/firestore';
 import { getAuth } from 'firebase/auth'; // Firebase Authをインポート
 import 'bootstrap/dist/css/bootstrap.min.css';
 import '../style/DoneTaskLists.css'; // CSSファイルをインポート
@@ -15,8 +15,9 @@ function DoneTaskLists() {
 
     if (user) {
       const colRef = collection(db, "users", user.uid, "tasks");
+      const q = query(colRef, where("status", "==", "Done")); // status が Done のものだけを取得
       
-      const unsubscribe = onSnapshot(colRef, (querySnapshot) => {
+      const unsubscribe = onSnapshot(q, (querySnapshot) => {
         const taskList = querySnapshot.docs.map((doc) => ({
           id: doc.id,
           ...doc.data(), // Firestore のデータ
