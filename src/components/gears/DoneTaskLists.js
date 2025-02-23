@@ -1,13 +1,14 @@
-import React, { useState, useEffect } from 'react';
+import React, { useState, useEffect, useRef } from 'react';
 import Task from './Task';
 import { db } from '../../firebase';
 import { collection, onSnapshot, query, where } from 'firebase/firestore';
 import { getAuth } from 'firebase/auth'; // Firebase Authをインポート
 import 'bootstrap/dist/css/bootstrap.min.css';
-import '../style/TaskLists.css'; // CSSファイルをインポート
+import '../style/DoneTaskLists.css'; // CSSファイルをインポート
 
 function DoneTaskLists() {
   const [tasks, setTasks] = useState([]);
+  const taskListBoxRef = useRef(null);
 
   useEffect(() => {
     const auth = getAuth();
@@ -29,9 +30,15 @@ function DoneTaskLists() {
     }
   }, []); // ロード時一回のみ実行
 
+  useEffect(() => {
+    if (taskListBoxRef.current) {
+      taskListBoxRef.current.style.height = `${taskListBoxRef.current.scrollHeight}px`;
+    }
+  }, [tasks]);
+
   return (
-    <div className="task-list-box">
-      <div className="tasks list-group">
+    <div className="donetask-list-box" ref={taskListBoxRef}>
+      <div className="donetasks list-group">
         {tasks.length > 0 ? (
           tasks.map((task) => <Task key={task.id} task={task} className="list-group-item" />)
         ) : (
