@@ -1,28 +1,32 @@
 import React from 'react';
 import 'bootstrap/dist/css/bootstrap.min.css';
+import TaskLists from './TaskLists';
 
 function DoneTasks() {
   return (
     <div className="container mt-3">
       <div className="row">
-        <div className="col">
+        <div className="col-md-12">
           <div className="card" style={{ height: '100%' }}>
-            <div className="card-body">
-              <div className="row">
-                <div className="col-md-6">
-                  <h5>左側のコンテンツ</h5>
-                  <p>ここに左側の詳細なコンテンツを追加します。</p>
+            <div className="card-header">
+              完了
+            </div>
+            <div className="row">
+              <div className="col-md-4">
+                <div className="card-body">
+                  左側のコンテンツ
                 </div>
-                <div className="col-md-6">
-                  <h5>右側のコンテンツ</h5>
-                  <p>ここに右側の詳細なコンテンツを追加します。</p>
+              </div>
+              <div className="col-md-8">
+                <div className="card-body">
+                  <TaskLists />
                 </div>
               </div>
             </div>
           </div>
         </div>
       </div>
-    </div>
+    </div >
   );
 }
 
