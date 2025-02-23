@@ -2,57 +2,48 @@ html, body {
     margin: 0;
     padding: 0;
     height: 100vh;
-    width: 100%; /* 修正 */
-    overflow-x: hidden; /* 横スクロール防止 */
+    width: 100%;
+    overflow-x: hidden;
 }
 
 .topContainer {
     display: flex;
     flex-direction: column;
     height: 100vh;
-    width: 100%; /* 修正 */
+    width: 100%;
     margin: 0;
     padding: 0;
 }
 
 /* ヘッダー部分 */
 .headerPanel {
-    display: flex; /* ヘッダー内の全要素を横並びに */
+    display: flex;
     align-items: center;
     justify-content: space-between;
-    width: 100%; /* 修正 */
+    width: 100%;
     background-color: grey;
-    height: 40px; /* ヘッダー高さ */
-}
-
-/* 下部コンテンツ全体のコンテナ */
-.contentWrapper {
-    flex: 1;
-    width: 100%; /* 修正 */
+    height: 40px;
 }
 
 /* home: 左/メイン/右パネルを横並びにし、残りの高さを埋める */
 .home {
     display: flex;
-    width: 100%; /* 修正 */
+    width: 100%;
     flex: 1;
     align-items: stretch;
 }
 
 /* 左パネル：LeftPanel */
 .leftPanel {
-    width: 20%;
     background-color: #ccffcc; /* 薄い黄緑 */
 }
 
 /* 右パネル：RightPanel */
 .rightPanel {
-    width: 20%;
     background-color: #add8e6; /* 薄い水色 */
 }
 
 /* メインパネル：MainPanel */
 .mainPanel {
-    flex: 1;
     background-color: #ffffe0; /* 薄い黄色 */
 }

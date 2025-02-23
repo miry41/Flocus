@@ -4,7 +4,7 @@ import { db } from '../../firebase';
 import { collection, onSnapshot, query, where } from 'firebase/firestore';
 import { getAuth } from 'firebase/auth'; // Firebase Authをインポート
 import 'bootstrap/dist/css/bootstrap.min.css';
-import '../style/DoneTaskLists.css'; // CSSファイルをインポート
+import '../style/TaskLists.css'; // CSSファイルをインポート
 
 function DoneTaskLists() {
   const [tasks, setTasks] = useState([]);
@@ -30,8 +30,8 @@ function DoneTaskLists() {
   }, []); // ロード時一回のみ実行
 
   return (
-    <div className="donetask-list-box">
-      <div className="donetasks list-group">
+    <div className="task-list-box">
+      <div className="tasks list-group">
         {tasks.length > 0 ? (
           tasks.map((task) => <Task key={task.id} task={task} className="list-group-item" />)
         ) : (
