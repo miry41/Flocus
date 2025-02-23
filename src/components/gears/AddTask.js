@@ -1,27 +1,26 @@
 import React from 'react'
-import { db, auth } from '../../firebase';
+import { db } from '../../firebase';
 import firebase from 'firebase/compat/app';
 import '../style/AddTask.css';  // CSSファイルをインポート
 
 function AddTask({ onClose }) {
   const [task, setTask] = React.useState('');
   const [deadline, setDeadline] = React.useState('');
-  const [goalTime, setGoalTime] = React.useState('');
+  // 開発段階では固定のユーザIDを使用
+  const fixedUid = "RXVjqgF9u6qtGHGRAAk6";
 
   async function addATask(e) {
     e.preventDefault();
-    const { uid, photoURL } = auth.currentUser;
     try {
-      await db.collection('users').doc('RXVjqgF9u6qtGHGRAAk6').collection('tasks').add({
-        text: task,
-        deadline,     // 締め切り情報を保存
-        goalTime,     // 目標達成時間（時間数として入力）を保存
-        photoURL,
+      await db.collection('users').doc(fixedUid).collection('tasks').add({
+        CommitTime: 0,         // CommitTimeを0で固定
+        deadline,              // ユーザが入力したタイムスタンプ
+        name: task,            // ユーザが入力した文字列
+        status: "yet",         // ステータスを "yet" で固定
         createdAt: firebase.firestore.FieldValue.serverTimestamp()
       });
       setTask('');
       setDeadline('');
-      setGoalTime('');
       onClose(); // 正常に追加できた後、ポップアップを閉じる等の処理
     } catch (error) {
       console.error('タスクの追加中にエラーが発生しました:', error);
@@ -48,15 +47,6 @@ function AddTask({ onClose }) {
               type="datetime-local"
               onChange={(e) => setDeadline(e.target.value)}
               value={deadline}
-            />
-          </div>
-          <div className="GoalTime">
-            <label>目標達成時間（時間）：</label>
-            <input
-              type="number"
-              placeholder="目標達成時間 (時間)"
-              onChange={(e) => setGoalTime(e.target.value)}
-              value={goalTime}
             />
           </div>
           <button type="submit">追加</button>
