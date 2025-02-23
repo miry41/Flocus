@@ -13,7 +13,6 @@ const CurrentOn = ({ tasks, uid }) => {
         const taskDoc = await taskRef.get();
         if (taskDoc.exists) {
           setCurrentTask({ id: taskDoc.id, ...taskDoc.data() });
-          console.log(taskDoc.data());
         } else {
           console.log('No such task!');
         }

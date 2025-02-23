@@ -33,6 +33,7 @@ function SignIn() {
             followers: "",
             following: "",
             name: user.displayName || "Unknown",
+            photoURL: user.photoURL || "", // プロフィール画像のURLを保存
             weeklyStudyTime: 0,
           });
 
