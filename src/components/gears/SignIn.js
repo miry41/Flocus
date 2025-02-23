@@ -29,6 +29,7 @@ function SignIn() {
         } else {
           // Firestore に新規ユーザーのデータを作成
           await userDocRef.set({
+            id: uid, // 追加
             currentTaskId: "",
             followers: "",
             following: "",

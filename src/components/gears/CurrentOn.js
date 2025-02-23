@@ -3,7 +3,8 @@ import React, { useEffect, useState } from 'react';
 import { Draggable } from '@hello-pangea/dnd';
 import { db } from '../../firebase'; // Firebaseの設定ファイルをインポート
 
-const CurrentOn = ({ tasks, uid }) => {
+const CurrentOn = ({ tasks }) => {
+  const uid = tasks.id;
   const [currentTask, setCurrentTask] = useState(null);
 
   useEffect(() => {

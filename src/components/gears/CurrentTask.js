@@ -10,14 +10,12 @@ import { getAuth } from 'firebase/auth';
 function CurrentTask() {
   const [currentTask, setCurrentTask] = useState([]);
   const [data, setData] = useState({ currentTaskId: "" });
-  const [uid, setUid] = useState("");
 
   useEffect(() => {
     const fetchCurrentTask = async () => {
       const auth = getAuth();
       const user = auth.currentUser;
       if (user) {
-        setUid(user.uid); // ユーザーのuidを保存
         const db = getFirestore();
         const docRef = doc(db, 'users', user.uid);
         const docSnap = await getDoc(docRef);
@@ -58,7 +56,7 @@ function CurrentTask() {
                         {data.currentTaskId === "" ? (
                           <EmptyTask />
                         ) : (
-                          <CurrentOn tasks={data} uid={uid} />
+                          <CurrentOn tasks={data} />
                         )}
                         {provided.placeholder}
                       </div>

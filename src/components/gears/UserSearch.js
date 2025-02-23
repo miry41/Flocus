@@ -6,6 +6,8 @@ import Account from './Account';
 function UserSearch() {
   const [searchTerm, setSearchTerm] = useState('');
   const [users, setUsers] = useState([]);
+  const [selectedUser, setSelectedUser] = useState(null);
+  const [isPopupOpen, setIsPopupOpen] = useState(false);
 
   useEffect(() => {
     const handleSearch = async () => {
@@ -27,6 +29,16 @@ function UserSearch() {
     handleSearch();
   }, [searchTerm]);
 
+  const handleUserClick = (user) => {
+    setSelectedUser(user);
+    setIsPopupOpen(true);
+  };
+
+  const handleClosePopup = () => {
+    setIsPopupOpen(false);
+    setSelectedUser(null);
+  };
+
   return (
     <div style={{ position: 'relative' }}>
       <input
@@ -38,11 +50,18 @@ function UserSearch() {
       {users.length > 0 && (
         <div style={{ position: 'absolute', top: '100%', left: 0, backgroundColor: 'white', border: '1px solid #ccc', zIndex: 1 }}>
           {users.map((user, index) => (
-            <div key={index} style={{ padding: '8px', borderBottom: '1px solid #ccc' }}>
+            <div
+              key={index}
+              style={{ padding: '8px', borderBottom: '1px solid #ccc', cursor: 'pointer' }}
+              onClick={() => handleUserClick(user)}
+            >
               {user.name}
             </div>
           ))}
         </div>
+      )}
+      {isPopupOpen && selectedUser && (
+        <Account userData={selectedUser} onClose={handleClosePopup} />
       )}
     </div>
   );

@@ -19,7 +19,7 @@ function MyAccount() {
         const userDocSnap = await getDoc(userDoc);
 
         if (userDocSnap.exists()) {
-          setUserData(userDocSnap.data());
+          setUserData({ id: user.uid, ...userDocSnap.data() });
         } else {
           console.log('No such document!');
         }
@@ -47,7 +47,7 @@ function MyAccount() {
       <span onClick={handleAccountClick}>{userData.name}</span>
       <span>{userData.followers}</span>
       <span>{userData.following}</span>
-      {isPopupOpen && <Account userData={userData} onClose={handleClosePopup} />}
+      {isPopupOpen && <Account userData={userData} onClose={handleClosePopup}/>}
     </div>
   );
 }
