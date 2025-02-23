@@ -1,7 +1,9 @@
 // src/components/gears/CurrentOn.js
 import React, { useEffect, useState } from 'react';
 import { Draggable } from '@hello-pangea/dnd';
-import { db } from '../../firebase'; // Firebaseの設定ファイルをインポート
+import { db } from '../../firebase'; // Firebase設定ファイルのパスに合わせてください
+import Battery from './Battery';
+import Meter from './Meter';
 
 const CurrentOn = ({ tasks }) => {
   const uid = tasks.id;
@@ -36,10 +38,19 @@ const CurrentOn = ({ tasks }) => {
               {...provided.dragHandleProps}
               className="list-group-item"
             >
-              <div>TaskName: {currentTask.name}</div>
-              <div>Status: {currentTask.status}</div>
-              <div>Deadline: {currentTask.deadline}</div>
-              {/* 他のフィールドも必要に応じて追加 */}
+              {/* タスク名（上部中央） */}
+              <div className="text-center fw-bold mb-2">{currentTask.name}</div>
+              
+              {/* BatteryとMeterを横並びに配置 */}
+              <div className="d-flex align-items-center">
+                <Battery commitTime={currentTask.CommitTime} />
+                <div className="flex-grow-1 ms-3">
+                  <Meter commitTime={currentTask.CommitTime} />
+                </div>
+              </div>
+              
+              {/* 締め切り日時 */}
+              <div className="mt-2">Deadline: {currentTask.deadline}</div>
             </div>
           )}
         </Draggable>
@@ -51,3 +62,4 @@ const CurrentOn = ({ tasks }) => {
 };
 
 export default CurrentOn;
+
