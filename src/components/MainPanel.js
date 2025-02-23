@@ -1,12 +1,12 @@
 import React from 'react';
-import Time from './gears/Time';
+import Base from './gears/Base';
 import CurrentTask from './gears/CurrentTask';
 import DoneTasks from './gears/DoneTasks';
 
 function MainPanel() {
   return (
     <div className="mainPanel">
-      <Time />
+      <Base />
       <CurrentTask />
       <DoneTasks />
     </div>

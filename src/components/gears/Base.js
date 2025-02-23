@@ -1,6 +1,6 @@
 import React, { useState, useEffect, useCallback } from 'react';
 
-function Time() {
+function Base() {
     const [currentTime, setCurrentTime] = useState("");
     const [currentDate, setCurrentDate] = useState("");
   
@@ -21,7 +21,7 @@ function Time() {
     }, [updateTime]);
   
     return (
-      <div className="time">
+      <div className="base">
         <div className="text-center">
           <h2>{currentDate}</h2>
           <h1>{currentTime}</h1>
@@ -30,4 +30,4 @@ function Time() {
     );
 }
 
-export default Time;
+export default Base;
