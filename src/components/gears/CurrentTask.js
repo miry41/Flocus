@@ -17,7 +17,7 @@ function CurrentTask() {
   };
 
   return (
-    <div className="container mt-3">
+    <div className="container mt-2">
       <div className="row">
         <div className="col">
           <div className="card">
@@ -25,7 +25,7 @@ function CurrentTask() {
             <div className="card-header">着手中</div>
             <div className="card-body">
               {/* タスクを配置するための枠 */}
-              <div className="border rounded p-2" style={{ minHeight: '140px' }}>
+              <div className="border rounded p-2" style={{ minHeight: '150px' }}>
                 <DragDropContext onDragEnd={onDragEnd}>
                   <Droppable droppableId="currentTask">
                     {(provided) => (

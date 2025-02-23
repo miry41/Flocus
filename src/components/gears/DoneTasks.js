@@ -1,13 +1,13 @@
 import React from 'react';
 import 'bootstrap/dist/css/bootstrap.min.css';
-import TaskLists from './TaskLists';
+import DoneTaskLists from './DoneTaskLists';
 
 function DoneTasks() {
   return (
-    <div className="container mt-3">
+    <div className="container mt-2">
       <div className="row">
         <div className="col-md-12">
-          <div className="card" style={{ height: '140%' }}>
+          <div className="card" style={{ height: '50%' }}>
             <div className="card-header">
               完了
             </div>
@@ -19,7 +19,7 @@ function DoneTasks() {
               </div>
               <div className="col-md-8">
                 <div className="card-body">
-                  <TaskLists />
+                  <DoneTaskLists />
                 </div>
               </div>
             </div>
