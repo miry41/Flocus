@@ -1,7 +1,8 @@
 import React, { useEffect, useState } from 'react'
 import { getAuth } from 'firebase/auth'
 import { getFirestore, doc, getDoc } from 'firebase/firestore'
-import '../style/MyAccount.css' // スタイルシートをインポート
+import '../style/MyAccount.css'
+import Account from './Account'
 
 function MyAccount() {
   const [userData, setUserData] = useState(null)
@@ -27,6 +28,10 @@ function MyAccount() {
     fetchUserData()
   }, [])
 
+  const handleAccountClick = () => {
+    <Account />
+  }
+
   if (!userData) {
     return <div>Loading...</div>
   }
@@ -34,7 +39,7 @@ function MyAccount() {
   return (
     <div className="header">
       <img className="profile-image" src={userData.photoURL} alt="Profile" />
-      <span>{userData.name}</span>
+      <span onClick={handleAccountClick}>{userData.name}</span>
       <span>{userData.followers}</span>
       <span>{userData.following}</span>
     </div>
