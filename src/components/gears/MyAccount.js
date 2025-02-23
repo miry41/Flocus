@@ -1,39 +1,44 @@
-import React, { useEffect, useState } from 'react'
-import { getAuth } from 'firebase/auth'
-import { getFirestore, doc, getDoc } from 'firebase/firestore'
-import '../style/MyAccount.css'
-import Account from './Account'
+import React, { useEffect, useState } from 'react';
+import { getAuth } from 'firebase/auth';
+import { getFirestore, doc, getDoc } from 'firebase/firestore';
+import '../style/MyAccount.css';
+import Account from './Account';
 
 function MyAccount() {
-  const [userData, setUserData] = useState(null)
+  const [userData, setUserData] = useState(null);
+  const [isPopupOpen, setIsPopupOpen] = useState(false);
 
   useEffect(() => {
     const fetchUserData = async () => {
-      const auth = getAuth()
-      const db = getFirestore()
-      const user = auth.currentUser
+      const auth = getAuth();
+      const db = getFirestore();
+      const user = auth.currentUser;
 
       if (user) {
-        const userDoc = doc(db, 'users', user.uid)
-        const userDocSnap = await getDoc(userDoc)
+        const userDoc = doc(db, 'users', user.uid);
+        const userDocSnap = await getDoc(userDoc);
 
         if (userDocSnap.exists()) {
-          setUserData(userDocSnap.data())
+          setUserData(userDocSnap.data());
         } else {
-          console.log('No such document!')
+          console.log('No such document!');
         }
       }
-    }
+    };
 
-    fetchUserData()
-  }, [])
+    fetchUserData();
+  }, []);
 
   const handleAccountClick = () => {
-    <Account />
-  }
+    setIsPopupOpen(true);
+  };
+
+  const handleClosePopup = () => {
+    setIsPopupOpen(false);
+  };
 
   if (!userData) {
-    return <div>Loading...</div>
+    return <div>Loading...</div>;
   }
 
   return (
@@ -42,8 +47,9 @@ function MyAccount() {
       <span onClick={handleAccountClick}>{userData.name}</span>
       <span>{userData.followers}</span>
       <span>{userData.following}</span>
+      {isPopupOpen && <Account userData={userData} onClose={handleClosePopup} />}
     </div>
-  )
+  );
 }
 
-export default MyAccount
+export default MyAccount;

@@ -1,6 +1,7 @@
 import React, { useState, useEffect } from 'react';
 import { db } from '../../firebase';
 import { collection, query, orderBy, startAt, endAt, getDocs } from 'firebase/firestore';
+import Account from './Account';
 
 function UserSearch() {
   const [searchTerm, setSearchTerm] = useState('');
