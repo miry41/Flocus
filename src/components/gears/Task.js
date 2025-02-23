@@ -38,7 +38,9 @@ function Task({ task }) {
       <div className="progress my-2 m-0">
         <div className="progress-bar bg-info" style={{ width: `${progressWidth}%` }}></div>
       </div>
-      <button onClick={handleDeleteTask} className="btn btn-danger mt-2">タスクを消去</button>
+      {task.status !== "Done" && (
+        <button onClick={handleDeleteTask} className="btn btn-danger mt-2">タスクを消去</button>
+      )}
     </div>
   );
 }
