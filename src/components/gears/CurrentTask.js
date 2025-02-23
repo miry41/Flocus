@@ -9,22 +9,21 @@ import { getAuth } from 'firebase/auth';
 
 function CurrentTask() {
   const [currentTask, setCurrentTask] = useState([]);
-  const [hasTask, setHasTask] = useState(false);
   const [data, setData] = useState({ currentTaskId: "" });
+  const [uid, setUid] = useState("");
 
   useEffect(() => {
     const fetchCurrentTask = async () => {
       const auth = getAuth();
       const user = auth.currentUser;
       if (user) {
+        setUid(user.uid); // ユーザーのuidを保存
         const db = getFirestore();
         const docRef = doc(db, 'users', user.uid);
         const docSnap = await getDoc(docRef);
         if (docSnap.exists()) {
           const data = docSnap.data();
-          console.log("currentTaskId:", data.currentTaskId); // ここで currentTaskId を出力
           setData(data);
-          setHasTask(data.currentTaskId !== "");
         }
       }
     };
@@ -45,10 +44,8 @@ function CurrentTask() {
       <div className="row">
         <div className="col">
           <div className="card">
-            {/* カードヘッダーに「着手中」を表示 */}
             <div className="card-header">着手中</div>
             <div className="card-body">
-              {/* タスクを配置するための枠 */}
               <div className="border rounded p-2" style={{ minHeight: '130px' }}>
                 <DragDropContext onDragEnd={onDragEnd}>
                   <Droppable droppableId="currentTask">
@@ -59,11 +56,9 @@ function CurrentTask() {
                         ref={provided.innerRef}
                       >
                         {data.currentTaskId === "" ? (
-                          // タスクがない場合は EmptyTask を表示
                           <EmptyTask />
                         ) : (
-                          // タスクがある場合は CurrentOn を表示
-                          <CurrentOn tasks={currentTask} />
+                          <CurrentOn tasks={data} uid={uid} />
                         )}
                         {provided.placeholder}
                       </div>

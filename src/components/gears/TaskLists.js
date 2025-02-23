@@ -1,31 +1,32 @@
-import React, { useState, useEffect } from 'react'
-import Task from './Task'
-import { db } from '../../firebase'
-import { collection, onSnapshot } from 'firebase/firestore'
-import { getAuth } from 'firebase/auth' // Firebase Authをインポート
+import React, { useState, useEffect } from 'react';
+import Task from './Task';
+import { db } from '../../firebase';
+import { collection, onSnapshot, query, where } from 'firebase/firestore';
+import { getAuth } from 'firebase/auth'; // Firebase Authをインポート
 import '../style/TaskLists.css'; // CSSファイルをインポート
 
 function TaskLists() {
-  const [tasks, setTasks] = useState([])
+  const [tasks, setTasks] = useState([]);
 
   useEffect(() => {
-    const auth = getAuth()
-    const user = auth.currentUser
+    const auth = getAuth();
+    const user = auth.currentUser;
 
     if (user) {
-      const colRef = collection(db, "users", user.uid, "tasks")
+      const colRef = collection(db, "users", user.uid, "tasks");
+      const q = query(colRef, where("status", "not-in", ["Done", "NOW"])); // status が Done および NOW 以外のものだけを取得
       
-      const unsubscribe = onSnapshot(colRef, (querySnapshot) => {
+      const unsubscribe = onSnapshot(q, (querySnapshot) => {
         const taskList = querySnapshot.docs.map((doc) => ({
           id: doc.id,
           ...doc.data(), // Firestore のデータ
-        }))
-        setTasks(taskList)
-      })
+        }));
+        setTasks(taskList);
+      });
 
-      return () => unsubscribe()
+      return () => unsubscribe();
     }
-  }, []) // ロード時一回のみ実行
+  }, []); // ロード時一回のみ実行
 
   return (
     <div className="task-list-box">
@@ -40,4 +41,4 @@ function TaskLists() {
   );
 }
 
-export default TaskLists
+export default TaskLists;

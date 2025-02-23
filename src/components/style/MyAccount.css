@@ -1,0 +1,13 @@
+.header {
+    display: flex;
+    align-items: center;
+  }
+  
+  .profile-image {
+    width: 30px; /* 画像の幅を30pxに設定 */
+    height: 30px; /* 画像の高さを30pxに設定 */
+    object-fit: cover; /* 画像を切り取ってフィットさせる */
+    padding: 2px; /* 上下左右に2pxのパディングを追加 */
+    border-radius: 50%; /* 画像を円形にする */
+    margin-right: 10px; /* 画像とテキストの間に余白を追加 */
+  }
