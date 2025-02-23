@@ -29,8 +29,8 @@ function DoneTaskLists() {
   }, []); // ロード時一回のみ実行
 
   return (
-    <div className="task-list-box">
-      <div className="tasks list-group">
+    <div className="donetask-list-box">
+      <div className="donetasks list-group">
         {tasks.length > 0 ? (
           tasks.map((task) => <Task key={task.id} task={task} className="list-group-item" />)
         ) : (

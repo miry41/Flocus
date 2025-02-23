@@ -3,6 +3,7 @@ import Task from './Task'
 import { db } from '../../firebase'
 import { collection, onSnapshot } from 'firebase/firestore'
 import { getAuth } from 'firebase/auth' // Firebase Authをインポート
+import '../style/TaskLists.css'; // CSSファイルをインポート
 
 function TaskLists() {
   const [tasks, setTasks] = useState([])
@@ -27,16 +28,16 @@ function TaskLists() {
   }, []) // ロード時一回のみ実行
 
   return (
-    <div>
-      <div className="tasks">
+    <div className="task-list-box">
+      <div className="tasks list-group">
         {tasks.length > 0 ? (
-          tasks.map((task) => <Task key={task.id} task={task} />)
+          tasks.map((task) => <Task key={task.id} task={task} className="list-group-item" />)
         ) : (
-          <p>タスクが見つかりません</p>
+          <p className="text-muted">タスクが見つかりません</p>
         )}
       </div>
     </div>
-  )
+  );
 }
 
 export default TaskLists
