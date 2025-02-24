@@ -44,15 +44,6 @@ function RightPanel() {
                   {followingUsers.map(user => (
                     <FllowingUser key={user.id} {...user} />
                   ))}
-                  a
-                  a
-                  a
-                  a
-                  a
-                  a
-                  a
-                  a
-                  a
                 </div>
               </div>
             </div>
