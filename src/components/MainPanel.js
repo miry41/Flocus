@@ -7,14 +7,14 @@ import 'bootstrap/dist/css/bootstrap.min.css';
 function MainPanel() {
   return (
     <div className="container-fluid mainPanel d-flex flex-column h-100">
-      <div className="row flex-grow-1 w-100">
+      <div className="row flex-grow-1 vh-95">
         <div className="col-12" style={{ height: "25vh" }}>
           <Base />
         </div>
-        <div className="col-12" style={{ height: "30vh" }}>
+        <div className="col-12" style={{ height: "33vh" }}>
           <CurrentTask />
         </div>
-        <div className="col-12" style={{ height: "25vh" }}>
+        <div className="col-12" style={{ height: "32vh" }}>
           <DoneTasks />
         </div>
       </div>
