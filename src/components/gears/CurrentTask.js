@@ -3,12 +3,12 @@ import React, { useState, useEffect } from 'react';
 import 'bootstrap/dist/css/bootstrap.min.css';
 import CurrentOn from './CurrentOn';
 import EmptyTask from './EmptyTask';
-import { getFirestore, doc, onSnapshot } from 'firebase/firestore';
+import { getFirestore, doc, onSnapshot, updateDoc } from 'firebase/firestore';
 import { getAuth } from 'firebase/auth';
 
 function CurrentTask() {
   const [data, setData] = useState({ currentTaskId: "" });
-
+  
   useEffect(() => {
     const auth = getAuth();
     const user = auth.currentUser;
@@ -24,6 +24,25 @@ function CurrentTask() {
     }
   }, []);
 
+  const handleComplete = async () => {
+    try {
+      const auth = getAuth();
+      const user = auth.currentUser;
+      if (!user) return;
+      const db = getFirestore();
+      const userDocRef = doc(db, 'users', user.uid);
+      // ユーザードキュメントのcurrentTaskIdをクリア
+      await updateDoc(userDocRef, { currentTaskId: "" });
+      // currentTaskIdが存在する場合、対応するタスクのstatusを"Done"に更新
+      if (data.currentTaskId !== "") {
+        const taskDocRef = doc(db, 'users', user.uid, 'tasks', data.currentTaskId);
+        await updateDoc(taskDocRef, { status: "Done" });
+      }
+    } catch (error) {
+      console.error("Error updating tasks: ", error);
+    }
+  };
+
   return (
     <div className="container mt-2">
       <div className="row">
@@ -37,6 +56,13 @@ function CurrentTask() {
                 <CurrentOn tasks={data} />
               )}
             </div>
+            {data.currentTaskId !== "" && (
+              <div className="card-footer text-end">
+                <button onClick={handleComplete} className="btn btn-success">
+                  完了
+                </button>
+              </div>
+            )}
           </div>
         </div>
       </div>
