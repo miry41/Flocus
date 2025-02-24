@@ -1,0 +1,19 @@
+.rightPanel .card-body {
+    display: flex;
+    flex-direction: column;
+    height: 100%;
+  }
+  
+  .ranking, .followingUsers, .divider-container {
+    flex: 1;
+  }
+  
+  .followingUsers, .divider-container {
+    overflow-y: auto; /* 垂直方向のスクロールバーを表示 */
+  }
+  
+  .divider {
+    border: 0;
+    border-top: 1px solid #ddd;
+    margin: 0;
+  }
