@@ -1,5 +1,5 @@
 import React from 'react';
-import { doc, deleteDoc, updateDoc, getDoc } from "firebase/firestore";
+import { doc, deleteDoc, updateDoc, getDoc, increment } from "firebase/firestore";
 import { db } from "../../firebase"; // firebase設定ファイルのパスに合わせて修正してください
 import { getAuth } from 'firebase/auth'; // Firebase Authをインポート
 
@@ -46,9 +46,18 @@ function Task({ task }) {
         // ユーザドキュメントの currentTaskId フィールドを更新
         await updateDoc(userDocRef, { currentTaskId: task.id });
         
-        // 該当タスクドキュメントのstatusフィールドを"NOW"に更新し、CommitTimeを333に上書き
+        // 該当タスクドキュメントのstatusフィールドを"NOW"に更新
         const taskDocRef = doc(db, "users", user.uid, "tasks", task.id);
-        await updateDoc(taskDocRef, { status: "NOW", CommitTime: 333 });
+        await updateDoc(taskDocRef, { status: "NOW"});
+        
+        // 1分ごとにCommitTimeを1増加する処理を開始
+        window.taskTimer = setInterval(async () => {
+          try {
+            await updateDoc(taskDocRef, { CommitTime: increment(1) });
+          } catch (error) {
+            console.error("CommitTime increment error: ", error);
+          }
+        }, 60000);
       }
     } catch (error) {
       console.error("NOW更新エラー: ", error);
@@ -57,7 +66,6 @@ function Task({ task }) {
 
   return (
     <div className="bg-light py-2 px-3 m-0 rounded">
-      {console.log(task)}
       <ul className="list-group m-0">
         <li className="list-group-item d-flex justify-content-between align-items-center m-0">
           {task.name}

@@ -40,6 +40,38 @@ function CurrentTask() {
       }
     } catch (error) {
       console.error("Error updating tasks: ", error);
+    } finally {
+      // NOWタスクのCommitTime更新タイマーを停止
+      if (window.taskTimer) {
+        clearInterval(window.taskTimer);
+        window.taskTimer = null;
+      }
+    }
+  };
+
+  const handleInterrupt = async () => {
+    try {
+      const auth = getAuth();
+      const user = auth.currentUser;
+      if (!user) return;
+      const db = getFirestore();
+      const userDocRef = doc(db, 'users', user.uid);
+      const currentTaskId = data.currentTaskId;
+      // ユーザードキュメントのcurrentTaskIdをクリア
+      await updateDoc(userDocRef, { currentTaskId: "" });
+      // currentTaskIdが存在する場合、対応するタスクのstatusを"yet"に更新
+      if (currentTaskId !== "") {
+        const taskDocRef = doc(db, 'users', user.uid, 'tasks', currentTaskId);
+        await updateDoc(taskDocRef, { status: "yet" });
+      }
+    } catch (error) {
+      console.error("Error interrupting task: ", error);
+    } finally {
+      // NOWタスクのCommitTime更新タイマーを停止
+      if (window.taskTimer) {
+        clearInterval(window.taskTimer);
+        window.taskTimer = null;
+      }
     }
   };
 
@@ -58,6 +90,9 @@ function CurrentTask() {
             </div>
             {data.currentTaskId !== "" && (
               <div className="card-footer text-end">
+                <button onClick={handleInterrupt} className="btn btn-warning me-2">
+                  中断
+                </button>
                 <button onClick={handleComplete} className="btn btn-success">
                   完了
                 </button>
