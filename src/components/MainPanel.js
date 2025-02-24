@@ -12,10 +12,10 @@ function MainPanel() {
         <div className="col-12" style={{ height: "25vh" }}>
           <Base />
         </div>
-        <div className="col-12" style={{ height: "33vh" }}>
+        <div className="col-12" style={{ height: "38vh" }}>
           <CurrentTask />
         </div>
-        <div className="col-12" style={{ height: "35vh", marginBottom: "2rem" }}>
+        <div className="col-12" style={{ height: "27vh", marginBottom: "2rem" }}>
           <DoneTasks />
         </div>
       </div>
