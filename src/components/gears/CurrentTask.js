@@ -44,26 +44,25 @@ function CurrentTask() {
           <div className="card">
             <div className="card-header">着手中</div>
             <div className="card-body">
-              <div className="border rounded p-2" style={{ minHeight: '130px' }}>
-                <DragDropContext onDragEnd={onDragEnd}>
-                  <Droppable droppableId="currentTask">
-                    {(provided) => (
-                      <div
-                        className="list-group"
-                        {...provided.droppableProps}
-                        ref={provided.innerRef}
-                      >
-                        {data.currentTaskId === "" ? (
-                          <EmptyTask />
-                        ) : (
-                          <CurrentOn tasks={data} />
-                        )}
-                        {provided.placeholder}
-                      </div>
-                    )}
-                  </Droppable>
-                </DragDropContext>
-              </div>
+              {/* 外側のタスクを囲む枠を削除 */}
+              <DragDropContext onDragEnd={onDragEnd}>
+                <Droppable droppableId="currentTask">
+                  {(provided) => (
+                    <div
+                      className="list-group"
+                      {...provided.droppableProps}
+                      ref={provided.innerRef}
+                    >
+                      {data.currentTaskId === "" ? (
+                        <EmptyTask />
+                      ) : (
+                        <CurrentOn tasks={data} />
+                      )}
+                      {provided.placeholder}
+                    </div>
+                  )}
+                </Droppable>
+              </DragDropContext>
             </div>
           </div>
         </div>
