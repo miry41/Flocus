@@ -24,16 +24,29 @@ function RightPanel() {
 
   return (
     <div className="rightPanel h-100">
-      <div className="ranking">
-      {/* ランキング表示部分 */}
-      </div>
-      <div className="followingUsers">
-      {followingUsers.map(user => (
-        <FllowingUser key={user.id} {...user} />
-      ))}
+      <div className="container mt-2">
+        <div className="row">
+          <div className="col-md-12">
+            <div className="card">
+              <div className="card-header">
+                週間ランキング
+              </div>
+              <div className="card-body">
+                <div className="ranking">
+                  {/* ランキング表示部分 */}
+                </div>
+                <div className="followingUsers">
+                  {followingUsers.map(user => (
+                    <FllowingUser key={user.id} {...user} />
+                  ))}
+                </div>
+              </div>
+            </div>
+          </div>
+        </div>
       </div>
     </div>
-  )
+              )
 }
 
-export default RightPanel
+              export default RightPanel
