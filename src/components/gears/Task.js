@@ -35,9 +35,9 @@ function Task({ task }) {
         const userDocRef = doc(db, "users", user.uid);
         await updateDoc(userDocRef, { currentTaskId: task.id });
         
-        // 該当タスクドキュメントのstatusフィールドを"NOW"に更新
+        // 該当タスクドキュメントのstatusフィールドを"NOW"に更新し、CommitTimeを333に上書き
         const taskDocRef = doc(db, "users", user.uid, "tasks", task.id);
-        await updateDoc(taskDocRef, { status: "NOW" });
+        await updateDoc(taskDocRef, { status: "NOW", CommitTime: 333 });
       }
     } catch (error) {
       console.error("NOW更新エラー: ", error);
