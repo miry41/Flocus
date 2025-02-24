@@ -18,7 +18,6 @@ function Task({ task }) {
         // task.id を利用して削除対象のドキュメントを指定
         const taskDocRef = doc(db, "users", user.uid, "tasks", task.id);
         await deleteDoc(taskDocRef);
-        //console.log("タスクを正常に消去しました。");
       }
     } catch (error) {
       console.error("タスク削除エラー: ", error);
@@ -48,19 +47,58 @@ function Task({ task }) {
         
         // 該当タスクドキュメントのstatusフィールドを"NOW"に更新
         const taskDocRef = doc(db, "users", user.uid, "tasks", task.id);
-        await updateDoc(taskDocRef, { status: "NOW"});
+        await updateDoc(taskDocRef, { status: "NOW" });
         
-        // 1分ごとにCommitTimeを1増加する処理を開始
+        // 1分ごとにCommitTimeとweeklyStudyTimeを1増加する処理を開始
         window.taskTimer = setInterval(async () => {
           try {
             await updateDoc(taskDocRef, { CommitTime: increment(1) });
+            await updateDoc(userDocRef, { weeklyStudyTime: increment(1) });
           } catch (error) {
-            console.error("CommitTime increment error: ", error);
+            console.error("タイマー更新エラー: ", error);
           }
-        }, 60000);
+        }, 600);
       }
     } catch (error) {
       console.error("NOW更新エラー: ", error);
+    }
+  };
+
+  const handleCompleteTask = async () => {
+    try {
+      // タイマー停止
+      clearInterval(window.taskTimer);
+      const auth = getAuth();
+      const user = auth.currentUser;
+      if (user) {
+        const userDocRef = doc(db, "users", user.uid);
+        const taskDocRef = doc(db, "users", user.uid, "tasks", task.id);
+        // タスク完了時にstatusを"Done"に更新
+        await updateDoc(taskDocRef, { status: "Done" });
+        // ユーザドキュメントのcurrentTaskIdをクリア
+        await updateDoc(userDocRef, { currentTaskId: null });
+      }
+    } catch (error) {
+      console.error("完了処理エラー: ", error);
+    }
+  };
+
+  const handleAbortTask = async () => {
+    try {
+      // タイマー停止
+      clearInterval(window.taskTimer);
+      const auth = getAuth();
+      const user = auth.currentUser;
+      if (user) {
+        const userDocRef = doc(db, "users", user.uid);
+        const taskDocRef = doc(db, "users", user.uid, "tasks", task.id);
+        // 中断時はstatusを"yet"に戻す（必要に応じて他の値に変更してください）
+        await updateDoc(taskDocRef, { status: "yet" });
+        // ユーザドキュメントのcurrentTaskIdをクリア
+        await updateDoc(userDocRef, { currentTaskId: null });
+      }
+    } catch (error) {
+      console.error("中断処理エラー: ", error);
     }
   };
 
@@ -80,7 +118,14 @@ function Task({ task }) {
       {task.status !== "Done" && (
         <>
           <button onClick={handleDeleteTask} className="btn btn-danger mt-2">消去</button>
-          <button onClick={handleNowTask} className="btn btn-success mt-2 ms-2">NOWへ</button>
+          {task.status !== "NOW" ? (
+            <button onClick={handleNowTask} className="btn btn-success mt-2 ms-2">NOWへ</button>
+          ) : (
+            <>
+              <button onClick={handleCompleteTask} className="btn btn-primary mt-2 ms-2">完了</button>
+              <button onClick={handleAbortTask} className="btn btn-secondary mt-2 ms-2">中断</button>
+            </>
+          )}
         </>
       )}
     </div>
