@@ -24,7 +24,7 @@ function RightPanel() {
   }, []);
 
   return (
-    <div className="rightPanel h-100">
+    <div className="rightPanel h-100" style={{ margin: '1rem' }}>
       <div className="container mt-2">
         <div className="row">
           <div className="col-md-12">

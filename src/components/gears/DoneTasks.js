@@ -19,7 +19,7 @@ function DoneTasks() {
                 </div>
               </div>
               <div className="col-md-8">
-                <div className="card-body" style={{ height: '32vh', overflowY: 'scroll' }}>
+                <div className="card-body">
                   <DoneTaskLists />
                 </div>
               </div>

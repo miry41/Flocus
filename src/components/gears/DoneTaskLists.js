@@ -37,7 +37,7 @@ function DoneTaskLists() {
   }, [tasks]);
 
   return (
-    <div className="donetask-list-box" ref={taskListBoxRef}>
+    <div className="donetask-list-box overflow-auto" ref={taskListBoxRef}>
       <div className="donetasks list-group">
         {tasks.length > 0 ? (
           tasks.map((task) => <Task key={task.id} task={task} className="list-group-item" />)

@@ -6,7 +6,7 @@ function LeftPanel() {
   const [showAddTask, setShowAddTask] = useState(false);
 
   return (
-    <div className="m-3" style={{ margin: '2rem' }}>
+    <div className="m-1" style={{ margin: '2rem' }}>
       <div className="card h-100">
         <div className="card-header d-flex justify-content-between align-items-center">
           <span>タスク</span>
