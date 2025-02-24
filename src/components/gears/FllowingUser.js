@@ -4,7 +4,8 @@ import { db } from '../../firebase';
 import 'bootstrap/dist/css/bootstrap.min.css';
 import '../style/FllowingUser.css';
 
-function FllowingUser({ id }) {
+function FllowingUser(props) {
+  const { id } = props;
   const [userData, setUserData] = useState(null);
   const [taskName, setTaskName] = useState(null);
 
@@ -47,8 +48,9 @@ function FllowingUser({ id }) {
     };
   }, [userData, id]);
 
+  // userData が読み込み中の場合は null ではなく明示的に null を返す（または Loading 文言を返す）
   if (!userData) {
-    return <div>Loading...</div>;
+    return;
   }
 
   return (

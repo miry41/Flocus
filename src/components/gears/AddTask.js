@@ -9,8 +9,23 @@ function AddTask({ onClose }) {
   const [task, setTask] = React.useState('');
   const [deadline, setDeadline] = React.useState('');
 
+  const taskInputRef = React.useRef(null);
+  const deadlineInputRef = React.useRef(null);
+
   async function addATask(e) {
     e.preventDefault();
+    // タスクの入力チェック
+    if (!task.trim()) {
+      alert("タスクを入力してください");
+      taskInputRef.current && taskInputRef.current.focus();
+      return;
+    }
+    // 締め切りの入力チェック
+    if (!deadline.trim()) {
+      alert("締め切りを入力してください");
+      deadlineInputRef.current && deadlineInputRef.current.focus();
+      return;
+    }
     try {
       const auth = getAuth();
       const user = auth.currentUser;
@@ -40,6 +55,7 @@ function AddTask({ onClose }) {
         <form onSubmit={addATask}>
           <div className="AddTask">
             <input
+              ref={taskInputRef}
               type="text"
               placeholder="タスクを追加"
               onChange={(e) => setTask(e.target.value)}
@@ -49,6 +65,7 @@ function AddTask({ onClose }) {
           <div className="Deadline">
             <label>締め切り：</label>
             <input
+              ref={deadlineInputRef}
               type="datetime-local"
               onChange={(e) => setDeadline(e.target.value)}
               value={deadline}
