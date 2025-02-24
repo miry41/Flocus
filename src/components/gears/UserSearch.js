@@ -33,6 +33,7 @@ function UserSearch() {
   const handleUserClick = (user) => {
     setSelectedUser(user);
     setIsPopupOpen(true);
+    setSearchTerm(''); // ここでinputのvalueをリセット
   };
 
   const handleClosePopup = () => {

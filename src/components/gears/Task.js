@@ -1,5 +1,5 @@
 import React from 'react';
-import { doc, deleteDoc } from "firebase/firestore";
+import { doc, deleteDoc, updateDoc } from "firebase/firestore";
 import { db } from "../../firebase"; // firebase設定ファイルのパスに合わせて修正してください
 import { getAuth } from 'firebase/auth'; // Firebase Authをインポート
 
@@ -25,8 +25,28 @@ function Task({ task }) {
     }
   };
 
+  const handleNowTask = async () => {
+    try {
+      const auth = getAuth();
+      const user = auth.currentUser;
+
+      if (user) {
+        // ユーザドキュメントの currentTaskid フィールドにtask.idを格納
+        const userDocRef = doc(db, "users", user.uid);
+        await updateDoc(userDocRef, { currentTaskId: task.id });
+        
+        // 該当タスクドキュメントのstatusフィールドを"NOW"に更新し、CommitTimeを333に上書き
+        const taskDocRef = doc(db, "users", user.uid, "tasks", task.id);
+        await updateDoc(taskDocRef, { status: "NOW", CommitTime: 333 });
+      }
+    } catch (error) {
+      console.error("NOW更新エラー: ", error);
+    }
+  };
+
   return (
     <div className="bg-light py-2 px-3 m-0 rounded">
+      {console.log(task)}
       <ul className="list-group m-0">
         <li className="list-group-item d-flex justify-content-between align-items-center m-0">
           {task.name}
@@ -39,10 +59,63 @@ function Task({ task }) {
         <div className="progress-bar bg-info" style={{ width: `${progressWidth}%` }}></div>
       </div>
       {task.status !== "Done" && (
-        <button onClick={handleDeleteTask} className="btn btn-danger mt-2">タスクを消去</button>
+        <>
+          <button onClick={handleDeleteTask} className="btn btn-danger mt-2">消去</button>
+          <button onClick={handleNowTask} className="btn btn-success mt-2 ms-2">NOWへ</button>
+        </>
       )}
     </div>
   );
 }
 
 export default Task;
+
+// import React from 'react';
+// import { doc, deleteDoc } from "firebase/firestore";
+// import { db } from "../../firebase"; // firebase設定ファイルのパスに合わせて修正してください
+// import { getAuth } from 'firebase/auth'; // Firebase Authをインポート
+
+// function Task({ task }) {
+//   // task.CommitTimeは分単位と仮定
+//   const minutes = task.CommitTime % 60;
+//   // 1時間に対する現在の分数の割合を計算
+//   const progressWidth = (minutes / 60) * 100;
+
+//   const handleDeleteTask = async () => {
+//     try {
+//       const auth = getAuth();
+//       const user = auth.currentUser;
+
+//       if (user) {
+//         // task.id を利用して削除対象のドキュメントを指定
+//         const taskDocRef = doc(db, "users", user.uid, "tasks", task.id);
+//         await deleteDoc(taskDocRef);
+//         //console.log("タスクを正常に消去しました。");
+//       }
+//     } catch (error) {
+//       console.error("タスク削除エラー: ", error);
+//     }
+//   };
+
+//   return (
+//     <div className="bg-light py-2 px-3 m-0 rounded">
+//       {console.log(task)}
+//       <ul className="list-group m-0">
+//         <li className="list-group-item d-flex justify-content-between align-items-center m-0">
+//           {task.name}
+//           <span className="badge bg-primary">
+//             {task.status}
+//           </span>
+//         </li>
+//       </ul>
+//       <div className="progress my-2 m-0">
+//         <div className="progress-bar bg-info" style={{ width: `${progressWidth}%` }}></div>
+//       </div>
+//       {task.status !== "Done" && (
+//         <button onClick={handleDeleteTask} className="btn btn-danger mt-2">消去</button>
+//       )}
+//     </div>
+//   );
+// }
+
+// export default Task;
