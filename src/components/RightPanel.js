@@ -4,7 +4,6 @@ import { db } from '../firebase';  // firebase の初期設定ファイルのパ
 import FllowingUser from './gears/FllowingUser';
 import { auth } from '../firebase';
 import './style/RightPanel.css'; // CSSファイルをインポート
-
 function RightPanel() {
   const [followingUsers, setFollowingUsers] = useState([]);
 
@@ -33,13 +32,6 @@ function RightPanel() {
                 週間ランキング
               </div>
               <div className="card-body d-flex flex-column">
-                <div className="ranking flex-grow-1 mb-2">
-                  １位：ユーザ名
-                  {/* ランキング表示部分 */}
-                </div>
-                <div className="divider-container flex-grow-1 overflow-auto">
-                  <hr className="divider my-2" />
-                </div>
                 <div className="followingUsers flex-grow-1 overflow-auto">
                   {followingUsers.map(user => (
                     <FllowingUser key={user.id} {...user} />
