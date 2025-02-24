@@ -1,3 +1,4 @@
+// src/components/MainPanel.js
 import React from 'react';
 import Base from './gears/Base';
 import CurrentTask from './gears/CurrentTask';
@@ -14,7 +15,7 @@ function MainPanel() {
         <div className="col-12" style={{ height: "33vh" }}>
           <CurrentTask />
         </div>
-        <div className="col-12" style={{ height: "32vh" }}>
+        <div className="col-12" style={{ height: "35vh", marginBottom: "2rem" }}>
           <DoneTasks />
         </div>
       </div>

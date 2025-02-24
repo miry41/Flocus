@@ -29,7 +29,7 @@ function SignIn() {
           await userDocRef.set({
             id: uid,
             currentTaskId: "",
-            followers: 0,
+            follower: 0,
             following: 0,
             name: user.displayName || "Unknown",
             photoURL: user.photoURL || "",
