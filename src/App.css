@@ -21,7 +21,7 @@ html, body {
     align-items: center;
     justify-content: space-between;
     width: 100%;
-    background-color: grey;
+    background-color: white;
     height: 5vh;
 }
 
@@ -36,17 +36,17 @@ html, body {
 
 /* 左パネル：LeftPanel */
 .leftPanel {
-    background-color: #ccffcc; /* 薄い黄緑 */
+    background-color: white;
 }
 
 /* 右パネル：RightPanel */
 .rightPanel {
-    background-color: #add8e6; /* 薄い水色 */
+    background-color: white;
 }
 
 /* メインパネル：MainPanel */
 .mainPanel {
-    background-color: #ffffe0; /* 薄い黄色 */
+    background-color: white;
 }
 
 /* レスポンシブデザインのためのメディアクエリ */
