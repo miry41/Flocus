@@ -71,10 +71,15 @@ const CurrentOn = ({ tasks }) => {
                 {...provided.dragHandleProps}
                 className="list-group-item"
               >
-                {/* ヘッダー行：左にタスク名、右に締め切りまでの残り時間 */}
-                <div className="d-flex justify-content-between align-items-center mb-2">
-                  <div className="fw-bold">{currentTask.name}</div>
-                  <div style={{ color: countdown.color, fontWeight: 'bold' }}>
+                {/* ヘッダー部分：タスク名（大きく、中央ぞろえ）と、中央ぞろえの締め切りカウント */}
+                <div className="mb-2">
+                  <div className="text-center fw-bold" style={{ fontSize: '1.75rem' }}>
+                    {currentTask.name}
+                  </div>
+                  <div
+                    className="text-center"
+                    style={{ color: countdown.color, fontWeight: 'bold' }}
+                  >
                     {countdown.text}
                   </div>
                 </div>
