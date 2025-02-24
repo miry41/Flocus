@@ -53,7 +53,11 @@ function FllowingUser({ id }) {
 
   return (
     <div className="following-user d-flex align-items-center">
-      <img className="f-profile-image me-3" src={userData.photoURL} alt={userData.name} />
+      <img
+        className={`f-profile-image me-3 ${userData.currentTaskId ? 'border-success' : ''}`}
+        src={userData.photoURL}
+        alt={userData.name}
+      />
       <div>
         <p className="mb-1">Name: {userData.name}</p>
         {
