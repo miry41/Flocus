@@ -1,41 +1,28 @@
 // src/components/gears/CurrentTask.js
 import React, { useState, useEffect } from 'react';
-import { DragDropContext, Droppable } from '@hello-pangea/dnd';
 import 'bootstrap/dist/css/bootstrap.min.css';
 import CurrentOn from './CurrentOn';
 import EmptyTask from './EmptyTask';
-import { getFirestore, doc, getDoc } from 'firebase/firestore';
+import { getFirestore, doc, onSnapshot } from 'firebase/firestore';
 import { getAuth } from 'firebase/auth';
 
 function CurrentTask() {
-  const [currentTask, setCurrentTask] = useState([]);
   const [data, setData] = useState({ currentTaskId: "" });
 
   useEffect(() => {
-    const fetchCurrentTask = async () => {
-      const auth = getAuth();
-      const user = auth.currentUser;
-      if (user) {
-        const db = getFirestore();
-        const docRef = doc(db, 'users', user.uid);
-        const docSnap = await getDoc(docRef);
+    const auth = getAuth();
+    const user = auth.currentUser;
+    if (user) {
+      const db = getFirestore();
+      const docRef = doc(db, 'users', user.uid);
+      const unsubscribe = onSnapshot(docRef, (docSnap) => {
         if (docSnap.exists()) {
-          const data = docSnap.data();
-          setData(data);
+          setData(docSnap.data());
         }
-      }
-    };
-
-    fetchCurrentTask();
+      });
+      return () => unsubscribe();
+    }
   }, []);
-
-  const onDragEnd = (result) => {
-    if (!result.destination) return;
-    const items = Array.from(currentTask);
-    const [reorderedItem] = items.splice(result.source.index, 1);
-    items.splice(result.destination.index, 0, reorderedItem);
-    setCurrentTask(items);
-  };
 
   return (
     <div className="container mt-2">
@@ -44,25 +31,11 @@ function CurrentTask() {
           <div className="card">
             <div className="card-header">着手中</div>
             <div className="card-body">
-              {/* 外側のタスクを囲む枠を削除 */}
-              <DragDropContext onDragEnd={onDragEnd}>
-                <Droppable droppableId="currentTask">
-                  {(provided) => (
-                    <div
-                      className="list-group"
-                      {...provided.droppableProps}
-                      ref={provided.innerRef}
-                    >
-                      {data.currentTaskId === "" ? (
-                        <EmptyTask />
-                      ) : (
-                        <CurrentOn tasks={data} />
-                      )}
-                      {provided.placeholder}
-                    </div>
-                  )}
-                </Droppable>
-              </DragDropContext>
+              {data.currentTaskId === "" ? (
+                <EmptyTask />
+              ) : (
+                <CurrentOn tasks={data} />
+              )}
             </div>
           </div>
         </div>
