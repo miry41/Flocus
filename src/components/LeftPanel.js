@@ -1,19 +1,24 @@
 import React, { useState } from 'react'
 import AddTask from './gears/AddTask'
-import Tasklists from './gears/TaskLists'
+import TaskLists from './gears/TaskLists'
 
 function LeftPanel() {
-    const [showAddTask, setShowAddTask] = useState(false)
+  const [showAddTask, setShowAddTask] = useState(false)
 
-    return (
-        <div className="leftPanel h-100">
-            <button className="btn btn-primary" onClick={() => setShowAddTask(true)}>
-                Add Task!
-            </button>
-            {showAddTask && <AddTask onClose={() => setShowAddTask(false)} />}
-            <Tasklists />
+  return (
+    <div className="m-3" style={{ margin: '2rem' }}>
+      <div className="card h-100">
+        <div className="card-header">タスク</div>
+        <div className="card-body">
+          <button className="btn btn-primary mb-2" onClick={() => setShowAddTask(true)}>
+            Add Task!
+          </button>
+          {showAddTask && <AddTask onClose={() => setShowAddTask(false)} />}
+          <TaskLists />
         </div>
-    )
+      </div>
+    </div>
+  )
 }
 
 export default LeftPanel

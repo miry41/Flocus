@@ -71,7 +71,7 @@ const CurrentOn = ({ tasks }) => {
                 {...provided.dragHandleProps}
                 className="list-group-item"
               >
-                {/* ヘッダー部分：タスク名（大きく、中央ぞろえ）と、中央ぞろえの締め切りカウント */}
+                {/* ヘッダー部分：大きく中央揃えのタスク名と締め切り表示 */}
                 <div className="mb-2">
                   <div className="text-center fw-bold" style={{ fontSize: '1.75rem' }}>
                     {currentTask.name}
@@ -83,13 +83,17 @@ const CurrentOn = ({ tasks }) => {
                     {countdown.text}
                   </div>
                 </div>
-                {/* BatteryとMeterを横並びに配置 */}
+                {/* 下段：Battery, Meter, 右側に「1h」を表示 */}
                 <div className="d-flex align-items-center">
                   <div style={{ width: '50px', textAlign: 'center' }}>
                     <Battery commitTime={currentTask.CommitTime} />
                   </div>
                   <div className="flex-grow-1 ms-3">
                     <Meter commitTime={currentTask.CommitTime} />
+                  </div>
+                  {/* 右側に「1h」を表示 */}
+                  <div className="ms-3 fw-bold">
+                    1h
                   </div>
                 </div>
               </div>
