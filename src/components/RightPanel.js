@@ -1,26 +1,26 @@
-import React, { useState, useEffect } from 'react'
-import { collection, getDocs } from 'firebase/firestore'
-import { db } from '../firebase'  // firebase の初期設定ファイルのパスに合わせて変更してください
-import FllowingUser from './gears/FllowingUser'
+import React, { useState, useEffect } from 'react';
+import { collection, getDocs } from 'firebase/firestore';
+import { db } from '../firebase';  // firebase の初期設定ファイルのパスに合わせて変更してください
+import FllowingUser from './gears/FllowingUser';
 import { auth } from '../firebase';
 
 function RightPanel() {
-  const [followingUsers, setFollowingUsers] = useState([])
+  const [followingUsers, setFollowingUsers] = useState([]);
 
   useEffect(() => {
     const fetchFollowingUsers = async () => {
       try {
         const uid = auth.currentUser.uid;  // 実際のユーザーUIDに置き換えてください
-        const colRef = collection(db, 'users', uid, 'following')
-        const querySnapshot = await getDocs(colRef)
-        const users = querySnapshot.docs.map(doc => ({ id: doc.id, ...doc.data() }))
-        setFollowingUsers(users)
+        const colRef = collection(db, 'users', uid, 'following');
+        const querySnapshot = await getDocs(colRef);
+        const users = querySnapshot.docs.map(doc => ({ id: doc.id, ...doc.data() }));
+        setFollowingUsers(users);
       } catch (error) {
-        console.error("Error fetching following users: ", error)
+        console.error("Error fetching following users: ", error);
       }
-    }
-    fetchFollowingUsers()
-  }, [])
+    };
+    fetchFollowingUsers();
+  }, []);
 
   return (
     <div className="rightPanel h-100">
@@ -31,11 +31,13 @@ function RightPanel() {
               <div className="card-header">
                 週間ランキング
               </div>
-              <div className="card-body">
-                <div className="ranking">
+              <div className="card-body d-flex flex-column">
+                <div className="ranking flex-grow-1 mb-2">
+                  １位：ユーザ名
                   {/* ランキング表示部分 */}
                 </div>
-                <div className="followingUsers">
+                <hr className="divider my-2" />
+                <div className="followingUsers flex-grow-1">
                   {followingUsers.map(user => (
                     <FllowingUser key={user.id} {...user} />
                   ))}
@@ -46,7 +48,7 @@ function RightPanel() {
         </div>
       </div>
     </div>
-              )
+  );
 }
 
-              export default RightPanel
+export default RightPanel;
