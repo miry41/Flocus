@@ -1,8 +1,10 @@
 # この作品について
 大学の同級生2人を誘って技育CAMPのHackathonに出場したときの作品です。
+
 コンセプトは「SNS機能付きのToDoリスト」です。
 
 バックエンドはFirebaseを使用し、フロントにReact、Bootstrapを使用しました。
+
 私は主にFirebaseとReactの接続を担当。
 
 Hackathon終了後から改変は加えていません。
